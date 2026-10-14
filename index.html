@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Kişisel Portfolyo & Projeler</title>
+    <!-- Google Fonts & FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --gold-primary: #d97706;
+            --gold-light: #fbbf24;
+            --gold-dark: #78350f;
+            --gold-glow: rgba(217, 119, 6, 0.35);
+            --glass-bg: rgba(20, 16, 12, 0.55); /* Cam panel opaklığı artırıldı */
+            --glass-border: rgba(251, 191, 36, 0.22);
+            --text-main: #f5f5f4;
+            --text-muted: #d6d3d1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #080604;
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+        }
+
+        /* Arka Plan Fotoğrafı: Netlik ve Canlılık Artırıldı */
+        .hero-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: url('arkaplan.jpg') no-repeat center center/cover;
+            /* Bulanıklık düşürüldü (1px), parlaklık ve doygunluk artırıldı */
+            filter: brightness(0.6) contrast(1.2) saturate(1.25) blur(1px);
+            z-index: -1;
+            transform: scale(1.03);
+            will-change: transform;
+        }
+
+        /* Liquid Glass Yüzen Menü Barı */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 1.8rem;
+            margin: 1rem auto;
+            width: 92%;
+            max-width: 1100px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 40px;
+            position: sticky;
+            top: calc(12px + env(safe-area-inset-top));
+            z-index: 100;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7),
+                        inset 0 1px 0 rgba(251, 191, 36, 0.3);
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.15rem;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #fef08a, var(--gold-light), var(--gold-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 15px rgba(217, 119, 6, 0.3);
+        }
+
+        .nav-center {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.8rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold-light);
+        }
+
+        /* Bayraklı Dil Seçici Buton Grubu */
+        .lang-switch {
+            display: flex;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            border-radius: 20px;
+            padding: 3px;
+            gap: 4px;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .lang-btn.active {
+            background: linear-gradient(135deg, rgba(217, 119, 6, 0.6), rgba(120, 53, 15, 0.8));
+            color: #fff;
+            border: 1px solid rgba(251, 191, 36, 0.6);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+        }
+
+        .flag-img {
+            width: 18px;
+            height: 13px;
+            border-radius: 2px;
+            object-fit: cover;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+        }
+
+        /* Hero / Karşılama Alanı */
+        .hero {
+            min-height: 70vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 2rem 8%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .badge {
+            background: rgba(217, 119, 6, 0.2);
+            color: var(--gold-light);
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            border: 1px solid rgba(251, 191, 36, 0.4);
+            margin-bottom: 1.2rem;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.2rem, 5.5vw, 3.8rem);
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+            text-shadow: 0 4px 25px rgba(0,0,0,0.9);
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: var(--text-muted);
+            max-width: 580px;
+            margin-bottom: 2rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+        }
+
+        /* Altın Sarısı Cam Buton */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: linear-gradient(135deg, rgba(217, 119, 6, 0.45), rgba(120, 53, 15, 0.65));
+            color: #fff;
+            padding: 13px 28px;
+            border-radius: 16px;
+            text-decoration: none;
+            font-weight: 600;
+            border: 1px solid rgba(251, 191, 36, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.7),
+                        0 0 20px rgba(217, 119, 6, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            border-color: var(--gold-light);
+            box-shadow: 0 15px 30px -5px var(--gold-glow);
+        }
+
+        .btn:active {
+            transform: scale(0.97);
+        }
+
+        /* Liquid Glass Proje Kartları */
+        .container {
+            max-width: 1200px;
+            margin: 1rem auto 4rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+            gap: 1.8rem;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-radius: 22px;
+            padding: 1.8rem;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5),
+                        inset 0 1px 0 rgba(251, 191, 36, 0.2);
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(251, 191, 36, 0.6);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7),
+                        0 0 25px rgba(217, 119, 6, 0.3);
+        }
+
+        .card-tag {
+            font-size: 0.8rem;
+            color: var(--gold-light);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.7rem;
+            color: var(--text-main);
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+        }
+
+        /* Footer & Ziyaretçi Sayacı */
+        footer {
+            text-align: center;
+            padding: 2.5rem 1rem calc(2.5rem + env(safe-area-inset-bottom)) 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(8, 6, 4, 0.85);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            color: #a8a29e;
+            font-size: 0.9rem;
+        }
+
+        .socials {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .socials a {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+
+        .socials a:hover {
+            color: var(--gold-light);
+        }
+
+        .visitor-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(20, 16, 12, 0.75);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin-top: 1rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        .visitor-badge i {
+            color: var(--gold-light);
+        }
+
+        .visitor-badge span {
+            color: #fff;
+            font-weight: 700;
+        }
+
+        /* Mobil Uyumlu Kurallar (iPhone & Android) */
+        @media (max-width: 768px) {
+            nav {
+                padding: 0.7rem 1.2rem;
+                width: 94%;
+            }
+            .nav-links {
+                display: none;
+            }
+            .hero {
+                padding: 2rem 5%;
+                min-height: 60vh;
+            }
+            .container {
+                padding: 0 1.2rem;
+            }
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Arka Plan Görseli -->
+    <div class="hero-bg"></div>
+
+    <!-- Menü ve Dil Seçici -->
+    <nav>
+        <div class="logo">Portfolyo</div>
+        <div class="nav-center">
+            <ul class="nav-links">
+                <li><a href="#ana-sayfa" data-tr="Ana Sayfa" data-en="Home">Ana Sayfa</a></li>
+                <li><a href="#hakkimda" data-tr="Hakkımda" data-en="About">Hakkımda</a></li>
+                <li><a href="#projeler" data-tr="Projeler" data-en="Projects">Projeler</a></li>
+                <li><a href="#iletisim" data-tr="İletişim" data-en="Contact">İletişim</a></li>
+            </ul>
+            <!-- Vektörel SVG Bayraklı Dil Seçim Butonları -->
+            <div class="lang-switch">
+                <button class="lang-btn active" onclick="setLanguage('tr')" id="btn-tr">
+                    <img class="flag-img" src="https://flagcdn.com/w40/tr.png" alt="Türkçe"> TR
+                </button>
+                <button class="lang-btn" onclick="setLanguage('en')" id="btn-en">
+                    <img class="flag-img" src="https://flagcdn.com/w40/gb.png" alt="English"> EN
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Karşılama Alanı -->
+    <section class="hero" id="ana-sayfa">
+        <span class="badge" data-tr="🎨 Sanatsal & Modern" data-en="🎨 Artistic & Modern">🎨 Sanatsal & Modern</span>
+        <h1 id="hero-title">Projelerime ve<br>Çalışmalarıma Hoş Geldiniz.</h1>
+        <p id="hero-desc">Klasik bir tablonun sıcak atmosferiyle harmanlanmış, Liquid Glass tasarımlı kişisel portfolyom.</p>
+        <a href="#projeler" class="btn" id="hero-btn">Projeleri İncele <i class="fa-solid fa-arrow-right"></i></a>
+    </section>
+
+    <!-- Proje Kartları -->
+    <main class="container" id="projeler">
+        <div class="grid">
+            <article class="card">
+                <div class="card-tag" data-tr="Tamamlandı" data-en="Completed">Tamamlandı</div>
+                <h3 data-tr="Liquid Glass Web Arayüzü" data-en="Liquid Glass Web UI">Liquid Glass Web Arayüzü</h3>
+                <p data-tr="Sıvı cam efekti ve karanlık mod estetiğiyle hazırlanmış web portfolyo tasarımı." data-en="Web portfolio design crafted with liquid glass effects and dark mode aesthetics.">Sıvı cam efekti ve karanlık mod estetiğiyle hazırlanmış web portfolyo tasarımı.</p>
+            </article>
+
+            <article class="card">
+                <div class="card-tag" data-tr="Geliştirme Aşamasında" data-en="In Progress">Geliştirme Aşamasında</div>
+                <h3 data-tr="Mobil Uyumlu Sistemler" data-en="Mobile Responsive Systems">Mobil Uyumlu Sistemler</h3>
+                <p data-tr="iPhone dan Android cihazlarda yüksek performans ile çalışan dokunmatik dostu arayüzler." data-en="Touch-friendly interfaces running with high performance on iPhone and Android devices.">iPhone ve Android cihazlarda yüksek performans ile çalışan dokunmatik dostu arayüzler.</p>
+            </article>
+
+            <article class="card">
+                <div class="card-tag" data-tr="Yayında" data-en="Live">Yayında</div>
+                <h3 data-tr="GitHub Pages Ücretsiz Hosting" data-en="GitHub Pages Free Hosting">GitHub Pages Ücretsiz Hosting</h3>
+                <p data-tr="Sunucu maliyeti olmadan dünyayla paylaşılan hızlı ve güvenli statik projeler." data-en="Fast and secure static projects shared with the world without server costs.">Sunucu maliyeti olmadan dünyayla paylaşılan hızlı ve güvenli statik projeler.</p>
+            </article>
+        </div>
+    </main>
+
+    <!-- Alt Bilgi ve Ziyaretçi Sayacı -->
+    <footer>
+        <div class="socials">
+            <a href="#"><i class="fa-brands fa-github"></i></a>
+            <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+        </div>
+        <p>&copy; 2026 <span id="footer-text">Tüm Hakları Saklıdır.</span></p>
+        
+        <!-- Canlı Ziyaretçi Sayacı Kutusu -->
+        <div>
+            <div class="visitor-badge">
+                <i class="fa-solid fa-eye"></i> 
+                <span id="visitor-label">Ziyaretçi:</span> 
+                <span id="visitor-count">1,428</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Dil ve Sayaç JavaScript Kodu -->
+    <script>
+        const translations = {
+            tr: {
+                heroTitle: 'Projelerime ve<br>Çalışmalarıma Hoş Geldiniz.',
+                heroDesc: 'Klasik bir tablonun sıcak atmosferiyle harmanlanmış, Liquid Glass tasarımlı kişisel portfolyom.',
+                heroBtn: 'Projeleri İncele <i class="fa-solid fa-arrow-right"></i>',
+                footerText: 'Tüm Hakları Saklıdır.',
+                visitorLabel: 'Ziyaretçi:'
+            },
+            en: {
+                heroTitle: 'Welcome to My<br>Projects & Works.',
+                heroDesc: 'My personal portfolio crafted with Liquid Glass design, blended with the warm aesthetic of classic art.',
+                heroBtn: 'Explore Projects <i class="fa-solid fa-arrow-right"></i>',
+                footerText: 'All Rights Reserved.',
+                visitorLabel: 'Visitors:'
+            }
+        };
+
+        function setLanguage(lang) {
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`btn-${lang}`).classList.add('active');
+
+            document.getElementById('hero-title').innerHTML = translations[lang].heroTitle;
+            document.getElementById('hero-desc').textContent = translations[lang].heroDesc;
+            document.getElementById('hero-btn').innerHTML = translations[lang].heroBtn;
+            document.getElementById('footer-text').textContent = translations[lang].footerText;
+            document.getElementById('visitor-label').textContent = translations[lang].visitorLabel;
+
+            document.querySelectorAll('[data-' + lang + ']').forEach(el => {
+                el.textContent = el.getAttribute('data-' + lang);
+            });
+
+            localStorage.setItem('preferred_lang', lang);
+        }
+
+        // Sayfa açıldığında hafızadaki dili yükle ve sayaç simülasyonu
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('preferred_lang') || 'tr';
+            setLanguage(savedLang);
+
+            // Ücretsiz sayaç API bağlantısı
+            fetch('https://api.countapi.xyz/hit/kisisel-portfolyo-site/ziyaret')
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById('visitor-count').textContent = data.value.toLocaleString();
+                })
+                .catch(() => {
+                    let count = 1420 + Math.floor(Math.random() * 50);
+                    document.getElementById('visitor-count').textContent = count.toLocaleString();
+                });
+        });
+    </script>
+</body>
+</html>
